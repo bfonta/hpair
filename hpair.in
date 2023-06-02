@@ -1,0 +1,156 @@
+PROCESS:  0 = GG --> hh   1 = GG --> Hh  2 = GG --> HH
+=======   3 = GG --> Ah   4 = GG --> AH  5 = GG --> AA
+          6 = QQ --> Ah   7 = QQ --> AH
+         -1 = SCALAR INTEGRALS
+          PARTON: 0 = HADRON CXN  1 = PARTON CXN
+          APPROX: 0 = MASSIVE     1 = LIMIT MQ --> INFINITY
+          TOP: 0 = TOP + BOTTOM   1 = ONLY TOP   2 = ONLY BOTTOM
+          RESONANCE: 0 = FULL     1 = RESONANCE CONTR. (PROC. 0, 5)
+
+PROCESS  =  0
+PARTON   =  0
+APPROX   =  0
+TOP      =  0
+RESONANCE=  0
+QCDCORR  =  11111
+--------------------------------------------------
+MODEL: 0 = SM    1 = MSSM     2 = MSSM (OLD)
+====== TRIANGLE: 0 = FULL  1 = NO TRIANGLE  2 = NO Z  3,4 = ONLY H/L TRIANGLE
+
+MODEL    =  0
+TR-LEVEL =  0
+TRIANGLE =  0
+PR(SUSY) =  0
+
+SILH     =  0
+
+NON-LINEAR:
+===========
+C_3      =  5.0D0
+C_T      =  1.00D0
+C_TT     =  0.00D0
+C_G      =  0.00D0
+C_GG     =  0.00D0
+C_B      =  1.D0
+
+SILH:
+=====
+BAR C_H  =  0.00D0
+BAR C_U  =  0.00D0
+BAR C_6  =  0.00D0
+BAR C_G  =  0.00000D0
+--------------------------------------------------
+TAN(BETA): (MSSM)
+==========
+
+TANBET   =  10.791274D0
+--------------------------------------------------
+STRUCTURE FUNCTIONS:
+====================
+
+NGROUP   =  0
+NSET     =  0
+PDFPATH  =  Grids
+PDFNAME  =  PDF4LHC15_nlo_100
+SCALE    =  1.D0
+SUBSTIT  =  1
+--------------------------------------------------
+ALPHA_S(M_Z):
+=============
+
+ALS(MZ)  =  0.118D0
+ACC      =  1.D-8
+--------------------------------------------------
+ORDER OF ALPHA_S:  1 = LO     2 = NLO
+=================  SCALE = Z(S)*M_HH + Z(PT)*DSQRT(M**2+PT**2) + Z(Q)*Q
+                   TOP: 0 = TOP DECOUPLED   1 = WITH TOP
+
+LOOP     =  1
+TOP      =  0
+Z(S)     =  0.5D0
+Z(PT)    =  0.D0
+Q        =  125.D0
+Z(Q)     =  0.0D0
+BEG      =  1.D0
+END      =  1.D0
+NUMBER   =  1
+--------------------------------------------------
+TOTAL ENERGY: [GEV]
+=============
+
+ENERGY   =  14000.D0
+PP/PPBAR =  0
+--------------------------------------------------
+QUARK MASSES: [GEV]
+============
+
+MSB(1)   =  0.190D0     
+MC       =  1.40D0     
+MB       =  4.75D0
+MT       =  172.5D0
+--------------------------------------------------
+HIGGS MASS: [GEV] MABEG  = SMALLEST MASS
+===========       MAEND  = LARGEST MASS 
+                  MULTMA = NUMBER OF HIGGS MASSES
+
+MABEG    =  125.0D0
+MAEND    =  1000.D0
+MULTMA   =  1
+--------------------------------------------------
+VEGAS:       VABSERR = ABSOLUTE ERROR
+======       VPOINT  = NUMBER OF CALLS
+             VITMAX  = NUMBER OF ITERATIONS
+             VNPRN   = TYPE OF VEGAS-OUTPUT
+
+VABSERR  =  0.D0
+VPOINT   =  10000
+VITMAX   =  5
+VNPRN    =  10
+--------------------------------------------------
+INTEGRATION-CUT:
+===============
+
+EPS      =  1.D-8
+--------------------------------------------------
+IMAGINARY-PART OF MQ**2: (DEFINE SIGN OF CUTS)
+========================
+
+MQ-IMAG  =  1.D-8
+KNIEHL   =  0
+--------------------------------------------------
+ORDER: HIGHEST IN TAYLOR-EXPANSION OF POLYLOG'S
+======
+
+NBER     =  18
+--------------------------------------------------
+PARAMETERS:
+===========
+
+GEVPB    =  389379660.D0
+GF       =  1.1663787D-5
+ALPHA    =  137.0359895D0
+MZ       =  91.187D0
+MW       =  80.385D0
+SW2      =  0.22395D0
+MST_L    =  1000.D0
+MST_R    =  1000.D0
+A_U      =  2450.D0
+A_D      =  2450.D0
+MU_H     =  100.D0
+GAM(S)   =  0
+GAMZ     =  2.490D0
+--------------------------------------------------
+SCALAR INTEGRALS:
+=================
+
+V        =  1.D-1
+TAU      =  1.0D-2
+M1       =  5.D0
+M2       =  10.D0
+MQ       =  172.5D0
+--------------------------------------------------
+PARTONIC CROSS SECTION:
+=======================
+
+WHAT     =  1000.D0
+--------------------------------------------------
