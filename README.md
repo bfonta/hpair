@@ -1,4 +1,6 @@
-The bulk of this repository is taken from Michael Spira's [HPAIR code](http://tiger.web.psi.ch/hpair/). My contribution was simply to write some code around it to perform parameter scans.
+The bulk of this repository is taken from Michael Spira's [HPAIR code](http://tiger.web.psi.ch/hpair/). 
+
+My contribution was simply to create a wrapper script to perform parameter scans. Additionally I added a very basic I/O functionality to enable passing the names of input and out files to HPAIR's executable.
 
 # HPAIR installation
  + Make sure you have the Fortran compiler ```gfortran``` installed
@@ -26,11 +28,12 @@ make install
 If you want to vary the "C_3" parameter and produce a ```results.txt``` files with the resulting cross-sections, run:
 
 ```shell
-go run create_files.go m1 0 1 2 3
+go run parameter_scan.go m1 0 1 2 3
 ```
 
 where the following happens:
 
-+ HPAIR input files are stored under ```inputs/``` (the suffix ```m``` denotes negative numbers)
++ 5 HPAIR input files are stored under ```inputs/``` (the suffix ```m``` denotes negative numbers)
 + HPAIR is run over those inputs
-+ the standard HPAIR output files will be stored under ```outputs/```.
++ the standard HPAIR output files (also 5 for this example) will be stored under ```outputs/```
++ a summary of the results is stored also under ```results/``` for easier access
