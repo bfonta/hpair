@@ -221,8 +221,22 @@ C--PROGRAM FOR NEUTRAL HIGGS PAIR PRODUCTION AT HADRON COLLIDERS
       EXTERNAL SIG,SIGRES,SIGHAT,SIGPART
       EXTERNAL QCDV,QCDGG,QCDGQ,QCDQQ
       EXTERNAL SIGBQQ,QSIGQQ,QSIGGQ
-      OPEN(NIN,FILE='hpair.in')
-      OPEN(NOUT,FILE='hpair.out')
+
+      INTEGER :: NUM_ARGS, IX
+      CHARACTER(LEN=12), DIMENSION(:), ALLOCATABLE :: ARGS
+      NUM_ARGS = COMMAND_ARGUMENT_COUNT()
+      ALLOCATE(ARGS(NUM_ARGS))
+      IF (NUM_ARGS.NE.2) THEN
+         PRINT*, "Please provide exactly two arguments: ./run in out"
+         STOP
+      ENDIF
+      DO IX = 1, NUM_ARGS
+         CALL GET_COMMAND_ARGUMENT(IX, ARGS(IX))
+      END DO
+      PRINT*, "Running with: Input=", ARGS(1), "Output=", ARGS(2)
+
+      OPEN(NIN,FILE=ARGS(1))
+      OPEN(NOUT,FILE=ARGS(2))
 C     OPEN(NV,FILE='hpair.veg')
       IIN=NIN
       IOUT=NOUT
