@@ -4,7 +4,6 @@ OBJS = hpair.o Cteq61Pdf.o
 OBJS0 = hpair0.o Cteq61Pdf.o
 
 #LIBS = /opt/lhapdf/lib/libLHAPDF.so
-
 LIBS = -L/opt/lhapdf/lib/ -lLHAPDF -Wl,-rpath=/opt/lhapdf/lib/
 
 #FFLAGS= -fno-emulate-complex -fno-automatic -ffixed-line-length-none -ffast-math -march=pentiumpro -malign-double -Wall -fno-silent
