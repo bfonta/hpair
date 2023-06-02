@@ -3,17 +3,24 @@ package main
 import (
 	"fmt"
 	"os"
-	"io"
 	"flag"
-	"log"
 	"errors"
+	"strings"
+	io "io/ioutil"
 	fp "path/filepath"
 )
 
 func check(e error) {
     if e != nil {
         panic(e)
+		// log.Fatalln(err)
     }
+}
+
+func create_dir(d string) {
+	if _, err := os.Stat(d); errors.Is(err, os.ErrNotExist) {
+		os.Mkdir(d, 0700) //os.Mkdir(d, os.ModeDir)
+	}
 }
 
 func main() {
@@ -22,39 +29,38 @@ func main() {
 	}   
 	flag.Parse()
 	tail := flag.Args()
-	
+
 	base_dir := fp.Join(string(os.Getenv("HOME")), "hpair")
-	out_dir  := fp.Join(base_dir, "inputs/")
-	if _, err := os.Stat(out_dir); errors.Is(err, os.ErrNotExist) {
-		os.Mkdir(out_dir, os.ModeDir)
-	}
+	out_dir := fp.Join(base_dir, "inputs/") // the inputs folder represents the output of this script
+	create_dir(out_dir)
+	create_dir(fp.Join(base_dir, "outputs/"))
 
 	// open template file
-	template, err := os.Open("hpair.in")
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer template.Close()
-	
+	template, err := io.ReadFile("hpair.template.in")
+	check(err)
+    // defer template.Close()
+
+	// create input files
 	for _, tri := range tail {
-		fmt.Println(tri)
-		dest, err := os.OpenFile(fp.Join(out_dir, "hpair_" + tri + ".txt"), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
-		if err != nil {
-			log.Fatal(err)
+		var tri2 string;
+		if strings.Contains(tri, "m") {
+			tri2 = strings.Replace(tri, "m", "-", -1)
+		} else {
+			tri2 = tri
 		}
+		fmt.Println(tri + " " + tri2)
+		
+		template_lines := strings.Split(string(template), "\n")
+        for i, line := range template_lines {
+			if strings.Contains(line, "C_3") {
+				template_lines[i] = "C_3      =  " + tri2 + ".0D0";
+			}
+        }
 
-		_, err = io.Copy(dest, template) // check first var for number of bytes copied
+		output_lines := strings.Join(template_lines, "\n")
+        err = io.WriteFile(fp.Join(out_dir, "hpair_" + tri + ".in"), []byte(output_lines), 0644)
 		check(err)
-
-		err = dest.Sync()
-		check(err)
-		if err := dest.Close(); err != nil {
-			log.Fatal(err)
-		}
-
 	}
 
-	f, err := os.Create(fp.Join(out_dir, "hpair1.out"))
-	check(err)
-	defer f.Close()
+	
 }

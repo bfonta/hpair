@@ -21,4 +21,16 @@ make install
      + For LO-only, set ```LOOP = 1```
      + For SM (```MODEL = 0```) without new resonances, use ```PROCESS = 0```
      + To change the trilinear coupling, one can modify ```C_3 =  1.0D0```
- + Run: ```./run```, which produces an output called ```hpair.out```.
+
+# Run this wrapper
+If you want to vary the "C_3" parameter and produce a ```results.txt``` files with the resulting cross-sections, run:
+
+```shell
+go run create_files.go m1 0 1 2 3
+```
+
+where the following happens:
+
++ HPAIR input files are stored under ```inputs/``` (the suffix ```m``` denotes negative numbers)
++ HPAIR is run over those inputs
++ the standard HPAIR output files will be stored under ```outputs/```.
