@@ -6,7 +6,7 @@ import (
 	"flag"
 	"errors"
 	"strings"
-	"strconv"
+	"sync"
 	fp "path/filepath"
 	ex "os/exec"
 	"regexp"
@@ -35,7 +35,6 @@ func run_hpair(in string, out string) {
         fmt.Println(err.Error())
         return
     }
-    // fmt.Println(string(stdout))
 }
 
 func create_input_file(tri string, template []byte, out string) {
@@ -65,30 +64,16 @@ func extract_cross_sections(out string) ([]string, []string) {
 	var matches_born [][]string;
 	var matches_nlo [][]string;
 	f_lines := strings.Split(string(f), "\n")
-	re := regexp.MustCompile("^.+?\\(   ([0-9]+?)\\.(.+?)E(.+?)  .*?([0-9])\\.(.+)E(.+) \\) PB$")
+	re := regexp.MustCompile("^.+?\\(.+?([0-9].+?) .*?([0-9].+?) \\) PB$")
 	for _, line := range f_lines {
 		if strings.Contains(line, "SIGMA_BORN") {
-			//fmt.Println(line)
 			matches_born = re.FindAllStringSubmatch(line, -1)
 		}
 		if strings.Contains(line, "SIGMA_NLO") {
-			//fmt.Println(line)
 			matches_nlo = re.FindAllStringSubmatch(line, -1)
 		}
 	}
 	return matches_born[0], matches_nlo[0]
-	//return []string{"TRASH", "1", "3321", "9", "2", "4322", "6"}, []string{"TRASH", "5", "21321", "9", "8", "7522", "6"}
-}
-
-func convert_to_float(arr []string) (string, string) {
-	if len(arr) != 7 {
-        panic("The array must have length 7! It has instead length " + strconv.Itoa(len(arr)))
-    }
-
-	var val_str string = arr[1] + "." + arr[2] + "E" + arr[3]
-	var err_str string = arr[4] + "." + arr[5] + "E" + arr[6]
-
-	return val_str, err_str
 }
 
 func save_cross_sections(out string, born_vals []string, born_errs []string, nlo_vals []string, nlo_errs []string) {
@@ -96,10 +81,10 @@ func save_cross_sections(out string, born_vals []string, born_errs []string, nlo
 	check(err)
     defer f.Close()
 
-	fmt.Fprintln(f, strings.Join(born_vals, `,`) + " # Born xsection values")
-	fmt.Fprintln(f, strings.Join(born_errs, `,`) + " # Born xsection errors")
-	fmt.Fprintln(f, strings.Join(nlo_errs,	`,`) + " # NLO xsection values")
-	fmt.Fprintln(f, strings.Join(nlo_errs,	`,`) + " # NLO xsection errors")
+	fmt.Fprintln(f, strings.Join(born_vals, `,`))
+	fmt.Fprintln(f, strings.Join(born_errs, `,`))
+	fmt.Fprintln(f, strings.Join(nlo_vals,	`,`))
+	fmt.Fprintln(f, strings.Join(nlo_errs,	`,`))
 }
 
 func main() {
@@ -119,30 +104,36 @@ func main() {
 	// open template file
 	template, err := os.ReadFile("hpair.template.in")
 	check(err)
-    // defer template.Close()
 
-	var sigma_born, error_born []string
-	var sigma_nlo, error_nlo []string
-	for _, tri := range parameters {
+	var npars int = len(parameters)
+	var sigma_born, error_born = make([]string, npars), make([]string, npars)
+	var sigma_nlo, error_nlo   = make([]string, npars), make([]string, npars)
 
-		hpair_in  := fp.Join(hpair_in_dir,  "hpair_" + tri + ".in")
-		hpair_out := fp.Join(hpair_out_dir, "hpair_" + tri + ".out")
-		
-		create_input_file(tri, template, hpair_in)
+	var wg sync.WaitGroup
+	for idx, tri := range parameters {
+		wg.Add(1)
 
-		run_hpair(hpair_in, hpair_out)
+		go func(idx int, tri string) {
+			defer wg.Done()
+			
+			hpair_in  := fp.Join(hpair_in_dir,  "hpair_" + tri + ".in")
+			hpair_out := fp.Join(hpair_out_dir, "hpair_" + tri + ".out")
+			
+			create_input_file(tri, template, hpair_in)
+			
+			run_hpair(hpair_in, hpair_out)
+			
+			born, nlo := extract_cross_sections(hpair_out)
 
-		born, nlo := extract_cross_sections(hpair_out)
-
-		val, error := convert_to_float(born)
-		sigma_born = append(sigma_born, val)
-		error_born = append(error_born, error)
-
-		val, error = convert_to_float(nlo)
-		sigma_nlo = append(sigma_nlo, val)
-		error_nlo = append(error_nlo, error)
+			// save data of a single goroutine
+			sigma_born[idx] = born[1]
+			error_born[idx] = born[2]	
+			sigma_nlo[idx]  = nlo[1]
+			error_nlo[idx]  = nlo[2]
+		}(idx, tri)
 	}
-
+	wg.Wait()
+	
 	save_cross_sections(fp.Join(hpair_out_dir, "results.txt"),
 		sigma_born, error_born, sigma_nlo, error_nlo)
 }
