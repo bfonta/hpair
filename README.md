@@ -19,7 +19,7 @@ make install
 ```
  + Add the required LHA PDF set with ```sudo wget http://lhapdfsets.web.cern.ch/lhapdfsets/current/PDF4LHC15_nlo_100.tar.gz -O- | sudo tar xz -C /opt/lhapdf/share/LHAPDF``` (possibly adapting the paths if you installed ```lhapdf``` somewhere else)
  + Compile HPAIR: ```make && make install```
- + Check the configuration stored in ```hpair.in```:
+ + Check the configuration stored in ```hpair.template.in```:
      + For LO-only, set ```LOOP = 1```
      + For SM (```MODEL = 0```) without new resonances, use ```PROCESS = 0```
      + To change the trilinear coupling, one can modify ```C_3 =  1.0D0```
@@ -36,4 +36,9 @@ where the following happens:
 + 5 HPAIR input files are stored under ```inputs/``` (the suffix ```m``` denotes negative numbers)
 + HPAIR is run over those inputs
 + the standard HPAIR output files (also 5 for this example) will be stored under ```outputs/```
-+ a summary of the results is stored also under ```results/``` for easier access
++ a summary of the results is stored in ```outputs/results.csv``` for easier access with the following structure (in the same order as provided by the user):
+    + 1st line: values of the born cross-section
+    + 2dn line: errors of the born cross-section
+    + 3rd line: values of the NLO cross-section
+    + 4th line: errors of the NLO cross-section
++ the values above will have different meanings depending on the ```hpair.template.in``` file

@@ -134,6 +134,6 @@ func main() {
 	}
 	wg.Wait()
 	
-	save_cross_sections(fp.Join(hpair_out_dir, "results.txt"),
+	save_cross_sections(fp.Join(hpair_out_dir, "results.csv"),
 		sigma_born, error_born, sigma_nlo, error_nlo)
 }
