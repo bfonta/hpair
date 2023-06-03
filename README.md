@@ -1,6 +1,6 @@
 The bulk of this repository is taken from Michael Spira's [HPAIR code](http://tiger.web.psi.ch/hpair/). 
 
-My contribution was simply to create a wrapper script to perform parameter scans. Additionally I added a very basic I/O functionality to enable passing the names of input and out files to HPAIR's executable.
+My contribution was to create a wrapper script to perform parameter scans. Additionally I added a very basic I/O functionality to enable passing the names of input and out files to HPAIR's executable.
 
 # HPAIR installation
  + Make sure you have the Fortran compiler ```gfortran``` installed
@@ -25,20 +25,21 @@ make install
      + To change the trilinear coupling, one can modify ```C_3 =  1.0D0```
 
 # Run this wrapper
-If you want to vary the "C_3" parameter and produce a ```results.txt``` files with the resulting cross-sections, run:
+You'll need to install the language ```go```. 
+In order to vary the "C_3" parameter (Higgs trilinear coupling) and produce a ```results.txt``` files with the resulting cross-sections, run:
 
 ```shell
 go run parameter_scan.go m1 0 1 2 3
 ```
 
-where the following happens:
+where ```go```'s native parallelism is exploited and the following happens:
 
 + 5 HPAIR input files are stored under ```inputs/``` (the suffix ```m``` denotes negative numbers)
 + HPAIR is run over those inputs
 + the standard HPAIR output files (also 5 for this example) will be stored under ```outputs/```
-+ a summary of the results is stored in ```outputs/results.csv``` for easier access with the following structure (in the same order as provided by the user):
++ a summary of the results is stored in ```outputs/results.csv``` for easier access (in the same order as provided by the user) with the following structure:
     + 1st line: values of the born cross-section
-    + 2dn line: errors of the born cross-section
+    + 2nd line: errors of the born cross-section
     + 3rd line: values of the NLO cross-section
     + 4th line: errors of the NLO cross-section
 + the values above will have different meanings depending on the ```hpair.template.in``` file
