@@ -4,9 +4,8 @@ My contribution was to create a wrapper script to perform parameter scans. Addit
 
 # HPAIR installation
  + Make sure you have the Fortran compiler ```gfortran``` installed
- + Download the compressed file stored [here](http://tiger.web.psi.ch/hpair/).
- + ```mkdir hpair``` and copy the above file to this folder
- + Decompress the file: ```tar xzvf hpair.tar.gz```
+ + Clone this repository and ```cd hpair```
+     + Alternatively, to get the original version of HPAIR, download the compressed file stored [here](http://tiger.web.psi.ch/hpair/), do a ```mkdir hpair```, copy the downloaded file to this folder and decompress it: ```tar xzvf hpair.tar.gz```.
  + Install LHAPDF following [these instructions](https://lhapdf.hepforge.org/install.html). I personanly used:
 ```shell
 wget https://lhapdf.hepforge.org/downloads/?f=LHAPDF-6.5.4.tar.gz -O LHAPDF-6.5.4.tar.gz
