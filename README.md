@@ -6,7 +6,7 @@ My contribution was to create a wrapper script to perform parameter scans. Addit
  + Make sure you have the Fortran compiler ```gfortran``` installed
  + Clone this repository and ```cd hpair```
      + Alternatively, to get the original version of HPAIR, download the compressed file stored [here](http://tiger.web.psi.ch/hpair/), do a ```mkdir hpair```, copy the downloaded file to this folder and decompress it: ```tar xzvf hpair.tar.gz```.
- + Install LHAPDF following [these instructions](https://lhapdf.hepforge.org/install.html). I personanly used:
+ + Install LHAPDF following [these instructions](https://lhapdf.hepforge.org/install.html). I personally used:
 ```shell
 wget https://lhapdf.hepforge.org/downloads/?f=LHAPDF-6.5.4.tar.gz -O LHAPDF-6.5.4.tar.gz
 tar xf LHAPDF-6.5.4.tar.gz
@@ -16,7 +16,7 @@ sudo ./configure --prefix=/opt/lhapdf
 make
 make install
 ```
- + Add the required LHA PDF set with ```sudo wget http://lhapdfsets.web.cern.ch/lhapdfsets/current/PDF4LHC15_nlo_100.tar.gz -O- | sudo tar xz -C /opt/lhapdf/share/LHAPDF``` (possibly adapting the paths if you installed ```lhapdf``` somewhere else)
+ + LHA PDF sets are available [here](https://lhapdfsets.web.cern.ch/current/); to install the suggested default, do (similar for other sets) ```sudo wget http://lhapdfsets.web.cern.ch/lhapdfsets/current/PDF4LHC15_nlo_100.tar.gz -O- | sudo tar xz -C /opt/lhapdf/share/LHAPDF``` (possibly adapting the paths if you installed ```lhapdf``` somewhere else)
  + Compile HPAIR: ```make && make install```
  + Check the configuration stored in ```hpair.template.in```:
      + For LO-only, set ```LOOP = 1```

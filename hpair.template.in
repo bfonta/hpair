@@ -12,7 +12,7 @@ PARTON   =  0
 APPROX   =  0
 TOP      =  0
 RESONANCE=  0
-QCDCORR  =  11111
+QCDCORR  =  10000
 --------------------------------------------------
 MODEL: 0 = SM    1 = MSSM     2 = MSSM (OLD)
 ====== TRIANGLE: 0 = FULL  1 = NO TRIANGLE  2 = NO Z  3,4 = ONLY H/L TRIANGLE
