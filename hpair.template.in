@@ -12,7 +12,7 @@ PARTON   =  0
 APPROX   =  0
 TOP      =  0
 RESONANCE=  0
-QCDCORR  =  10000
+QCDCORR  =  11111
 --------------------------------------------------
 MODEL: 0 = SM    1 = MSSM     2 = MSSM (OLD)
 ====== TRIANGLE: 0 = FULL  1 = NO TRIANGLE  2 = NO Z  3,4 = ONLY H/L TRIANGLE
@@ -65,7 +65,7 @@ ORDER OF ALPHA_S:  1 = LO     2 = NLO
 =================  SCALE = Z(S)*M_HH + Z(PT)*DSQRT(M**2+PT**2) + Z(Q)*Q
                    TOP: 0 = TOP DECOUPLED   1 = WITH TOP
 
-LOOP     =  1
+LOOP     =  2
 TOP      =  0
 Z(S)     =  0.5D0
 Z(PT)    =  0.D0
